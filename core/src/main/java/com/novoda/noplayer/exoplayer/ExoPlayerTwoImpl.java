@@ -21,6 +21,7 @@ import com.novoda.noplayer.Player;
 import com.novoda.noplayer.PlayerAudioTrack;
 import com.novoda.noplayer.PlayerListenersHolder;
 import com.novoda.noplayer.PlayerState;
+import com.novoda.noplayer.PlayerTextTrack;
 import com.novoda.noplayer.PlayerView;
 import com.novoda.noplayer.SurfaceHolderRequester;
 import com.novoda.noplayer.SystemClock;
@@ -62,6 +63,7 @@ public class ExoPlayerTwoImpl implements Player {
         DefaultTrackSelector trackSelector = new DefaultTrackSelector();
         ExoPlayerTrackSelector exoPlayerTrackSelector = new ExoPlayerTrackSelector(trackSelector);
         FixedTrackSelection.Factory trackSelectionFactory = new FixedTrackSelection.Factory();
+
         ExoPlayerAudioTrackSelector exoPlayerAudioTrackSelector = new ExoPlayerAudioTrackSelector(exoPlayerTrackSelector, trackSelectionFactory);
         SimpleExoPlayer exoPlayer = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(context), trackSelector, new DefaultLoadControl());
         LoadTimeout loadTimeout = new LoadTimeout(new SystemClock(), new Handler(Looper.getMainLooper()));
@@ -235,6 +237,7 @@ public class ExoPlayerTwoImpl implements Player {
         surfaceHolderRequester = playerView.getSurfaceHolderRequester();
         listenersHolder.addStateChangedListener(playerView.getStateChangedListener());
         listenersHolder.addVideoSizeChangedListener(playerView.getVideoSizeChangedListener());
+        exoPlayer.setTextOutput(playerView.getSubtitleView());
     }
 
     @Override
@@ -243,8 +246,18 @@ public class ExoPlayerTwoImpl implements Player {
     }
 
     @Override
+    public void selectTextTrack(PlayerTextTrack textTrack) {
+        trackSelector.selectTextTrack(textTrack);
+    }
+
+    @Override
     public List<PlayerAudioTrack> getAudioTracks() {
         return trackSelector.getAudioTracks();
+    }
+
+    @Override
+    public List<PlayerTextTrack> getTextTracks() {
+        return trackSelector.getTextTracks();
     }
 
     @Override

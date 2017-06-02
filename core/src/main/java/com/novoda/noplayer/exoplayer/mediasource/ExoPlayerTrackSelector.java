@@ -6,6 +6,8 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.MappingTrackSelector;
 
 import static com.google.android.exoplayer2.C.TRACK_TYPE_AUDIO;
+import static com.google.android.exoplayer2.C.TRACK_TYPE_TEXT;
+import static com.google.android.exoplayer2.C.TRACK_TYPE_VIDEO;
 
 public class ExoPlayerTrackSelector {
 
@@ -13,6 +15,10 @@ public class ExoPlayerTrackSelector {
 
     public ExoPlayerTrackSelector(DefaultTrackSelector trackSelector) {
         this.trackSelector = trackSelector;
+    }
+
+    TrackGroupArray getTextTrackGroups() {
+        return trackInfo().getTrackGroups(TRACK_TYPE_VIDEO);
     }
 
     TrackGroupArray getAudioTrackGroups() {
@@ -28,8 +34,12 @@ public class ExoPlayerTrackSelector {
         return trackInfo;
     }
 
-    void setSelectionOverride(TrackGroupArray trackGroups, MappingTrackSelector.SelectionOverride selectionOverride) {
+    void setAudioSelectionOverride(TrackGroupArray trackGroups, MappingTrackSelector.SelectionOverride selectionOverride) {
         trackSelector.setSelectionOverride(TRACK_TYPE_AUDIO, trackGroups, selectionOverride);
+    }
+
+    void setTextSelectionOverride(TrackGroupArray trackGroups, MappingTrackSelector.SelectionOverride selectionOverride) {
+        trackSelector.setSelectionOverride(TRACK_TYPE_VIDEO, trackGroups, selectionOverride);
     }
 
     boolean supportsTrackSwitching(TrackGroupArray trackGroups, int groupIndex) {

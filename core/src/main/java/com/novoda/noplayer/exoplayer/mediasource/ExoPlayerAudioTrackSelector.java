@@ -6,6 +6,7 @@ import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.trackselection.MappingTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
 import com.novoda.noplayer.PlayerAudioTrack;
+import com.novoda.noplayer.PlayerTextTrack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +23,22 @@ public class ExoPlayerAudioTrackSelector {
 
     public void selectAudioTrack(PlayerAudioTrack audioTrack) {
         TrackGroupArray trackGroups = trackSelector.getAudioTrackGroups();
-
         MappingTrackSelector.SelectionOverride selectionOverride = new MappingTrackSelector.SelectionOverride(
                 trackSelectionFactory,
                 audioTrack.groupIndex(),
                 audioTrack.formatIndex()
         );
-        trackSelector.setSelectionOverride(trackGroups, selectionOverride);
+        trackSelector.setAudioSelectionOverride(trackGroups, selectionOverride);
+    }
+
+    public void selectTextTrack(PlayerTextTrack textTrack) {
+        TrackGroupArray trackGroups = trackSelector.getTextTrackGroups();
+        MappingTrackSelector.SelectionOverride selectionOverride = new MappingTrackSelector.SelectionOverride(
+                trackSelectionFactory,
+                textTrack.groupIndex(),
+                textTrack.formatIndex()
+        );
+        trackSelector.setTextSelectionOverride(trackGroups, selectionOverride);
     }
 
     public List<PlayerAudioTrack> getAudioTracks() {
@@ -59,4 +69,22 @@ public class ExoPlayerAudioTrackSelector {
         return audioTracks;
     }
 
+    public List<PlayerTextTrack> getTextTracks() {
+        TrackGroupArray trackGroups = trackSelector.getTextTrackGroups();
+
+        List<PlayerTextTrack> textTracks = new ArrayList<>();
+
+        for (int groupIndex = 0; groupIndex < trackGroups.length; groupIndex++) {
+            TrackGroup trackGroup = trackGroups.get(groupIndex);
+            for (int formatIndex = 0; formatIndex < trackGroup.length; formatIndex++) {
+                PlayerTextTrack playerTextTrack = new PlayerTextTrack(
+                        groupIndex,
+                        formatIndex
+                );
+                textTracks.add(playerTextTrack);
+            }
+        }
+
+        return textTracks;
+    }
 }

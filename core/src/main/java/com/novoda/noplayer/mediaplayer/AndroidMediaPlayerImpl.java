@@ -13,6 +13,7 @@ import com.novoda.noplayer.Player;
 import com.novoda.noplayer.PlayerAudioTrack;
 import com.novoda.noplayer.PlayerListenersHolder;
 import com.novoda.noplayer.PlayerState;
+import com.novoda.noplayer.PlayerTextTrack;
 import com.novoda.noplayer.PlayerView;
 import com.novoda.noplayer.SystemClock;
 import com.novoda.noplayer.Timeout;
@@ -259,6 +260,11 @@ public final class AndroidMediaPlayerImpl implements Player {
     }
 
     @Override
+    public void selectTextTrack(PlayerTextTrack textTrack) {
+        // TODO
+    }
+
+    @Override
     public List<PlayerAudioTrack> getAudioTracks() {
         return mediaPlayer.getAudioTracks();
     }
@@ -266,6 +272,11 @@ public final class AndroidMediaPlayerImpl implements Player {
     @Override
     public PlayerListenersHolder getListenersHolder() {
         return listenersHolder;
+    }
+
+    @Override
+    public List<PlayerTextTrack> getTextTracks() {
+        return null;
     }
 
     @Override

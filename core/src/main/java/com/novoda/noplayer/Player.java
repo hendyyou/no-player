@@ -33,7 +33,11 @@ public interface Player extends PlayerState {
 
     void selectAudioTrack(PlayerAudioTrack audioTrack);
 
+    void selectTextTrack(PlayerTextTrack textTrack);
+
     List<PlayerAudioTrack> getAudioTracks();
+
+    List<PlayerTextTrack> getTextTracks();
 
     PlayerListenersHolder getListenersHolder();
 

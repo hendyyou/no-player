@@ -2,6 +2,8 @@ package com.novoda.noplayer;
 
 import android.view.View;
 
+import com.google.android.exoplayer2.ui.SubtitleView;
+
 public interface PlayerView {
 
     View getContainerView();
@@ -11,6 +13,8 @@ public interface PlayerView {
     Player.VideoSizeChangedListener getVideoSizeChangedListener();
 
     Player.StateChangedListener getStateChangedListener();
+
+    SubtitleView getSubtitleView();
 
     void showSubtitles();
 

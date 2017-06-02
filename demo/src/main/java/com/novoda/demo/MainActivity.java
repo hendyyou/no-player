@@ -12,6 +12,7 @@ import com.novoda.noplayer.ContentType;
 import com.novoda.noplayer.Player;
 import com.novoda.noplayer.PlayerAudioTrack;
 import com.novoda.noplayer.PlayerState;
+import com.novoda.noplayer.PlayerTextTrack;
 import com.novoda.noplayer.PlayerView;
 import com.novoda.noplayer.player.PlayerFactory;
 import com.novoda.noplayer.player.PrioritisedPlayers;
@@ -48,6 +49,9 @@ public class MainActivity extends Activity {
             @Override
             public void onPrepared(PlayerState playerState) {
                 player.play();
+                List<PlayerTextTrack> textTracks = player.getTextTracks();
+                player.selectTextTrack(textTracks.get(0));
+                playerView.showSubtitles();
             }
         });
 
