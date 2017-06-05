@@ -462,15 +462,6 @@ public class ExoPlayerTwoImplTest {
     }
 
     @Test
-    public void whenLoadingVideo_thenResetsPreparedListeners() {
-        // TODO LEGIT, this will be removed
-
-        player.loadVideo(playerView, uri, ANY_CONTENT_TYPE);
-
-        verify(preparedListeners).resetPreparedState();
-    }
-
-    @Test
     public void whenLoadingVideo_thenAddsPlayerEventListener() {
         player.loadVideo(playerView, uri, ANY_CONTENT_TYPE);
 
@@ -491,14 +482,6 @@ public class ExoPlayerTwoImplTest {
         player.loadVideo(playerView, uri, ANY_CONTENT_TYPE);
 
         verify(internalExoPlayer).prepare(mediaSource, RESET_POSITION, DO_NOT_RESET_STATE);
-    }
-
-    @Test
-    public void whenLoadingVideoWithTimeout_thenResetsPreparedListeners() {
-        // TODO remove as this listener will be removed
-        player.loadVideoWithTimeout(playerView, uri, ANY_CONTENT_TYPE, ANY_TIMEOUT, ANY_LOAD_TIMEOUT_CALLBACK);
-
-        verify(preparedListeners).resetPreparedState();
     }
 
     @Test

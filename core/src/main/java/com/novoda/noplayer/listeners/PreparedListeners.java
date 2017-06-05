@@ -33,8 +33,4 @@ public class PreparedListeners implements Player.PreparedListener {
     private boolean hasNotPreviouslyPrepared() {
         return !hasPrepared;
     }
-
-    public void resetPreparedState() {
-        hasPrepared = false;
-    }
 }

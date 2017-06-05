@@ -185,9 +185,6 @@ public class ExoPlayerTwoImpl implements Player {
 
         ExoPlayerForwarder forwarder = forwarderFactory.create(listenersHolder, this);
 
-        // TODO remove this listener/callback
-        // listenersHolder.getPreparedListeners().resetPreparedState();
-
         exoPlayer.addListener(forwarder.exoPlayerEventListener());
         exoPlayer.setVideoDebugListener(forwarder.videoRendererEventListener());
 
