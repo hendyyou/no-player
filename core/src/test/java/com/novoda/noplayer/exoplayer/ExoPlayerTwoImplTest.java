@@ -37,6 +37,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
@@ -88,6 +89,11 @@ public class ExoPlayerTwoImplTest {
     private static final int INDEX_INTERNAL_VIDEO_SIZE_CHANGED_LISTENER = 0;
 
     public static class GivenVideoNotLoaded extends Base {
+
+        private static final VideoPosition ANY_POSITION = VideoPosition.fromMillis(1000);
+
+        @Rule
+        public ExpectedException thrown = ExpectedException.none();
 
         @Test
         public void givenMediaSource_whenLoadingVideo_thenBindsHeart() {
@@ -290,6 +296,48 @@ public class ExoPlayerTwoImplTest {
             boolean isPlaying = player.isPlaying();
 
             assertThat(isPlaying).isFalse();
+        }
+
+        @Test
+        public void whenQueryingPlayheadPosition_thenThrowsIllegalStateException() {
+            thrown.expect(IllegalStateException.class);
+
+            player.getPlayheadPosition();
+        }
+
+        @Test
+        public void whenQueryingMediaDuration_thenThrowsIllegalStateException() {
+            thrown.expect(IllegalStateException.class);
+
+            player.getMediaDuration();
+        }
+
+        @Test
+        public void whenQueryingBufferPercentage_thenThrowsIllegalStateException() {
+            thrown.expect(IllegalStateException.class);
+
+            player.getBufferPercentage();
+        }
+
+        @Test
+        public void whenPausing_thenThrowsIllegalStateException() {
+            thrown.expect(IllegalStateException.class);
+
+            player.pause();
+        }
+
+        @Test
+        public void whenSeeking_thenThrowsIllegalStateException() {
+            thrown.expect(IllegalStateException.class);
+
+            player.seekTo(ANY_POSITION);
+        }
+
+        @Test
+        public void whenStopping_thenThrowsIllegalStateException() {
+            thrown.expect(IllegalStateException.class);
+
+            player.stop();
         }
     }
 
