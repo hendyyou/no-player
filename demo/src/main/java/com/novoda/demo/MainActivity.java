@@ -51,12 +51,10 @@ public class MainActivity extends Activity {
             }
         });
 
-        player.attach(playerView);
-
         audioSelectionButton.setOnClickListener(showAudioSelectionDialog);
 
         Uri uri = Uri.parse(URI_VIDEO_MPD);
-        player.loadVideo(uri, ContentType.DASH);
+        player.loadVideo(playerView, uri, ContentType.DASH);
     }
 
     private final View.OnClickListener showAudioSelectionDialog = new View.OnClickListener() {

@@ -184,15 +184,20 @@ public final class AndroidMediaPlayerImpl implements Player {
     }
 
     @Override
-    public void loadVideo(Uri uri, ContentType contentType) {
+    public void loadVideo(PlayerView playerView, Uri uri, ContentType contentType) {
+        attach(playerView);
         listenersHolder.getBufferStateListeners().onBufferStarted();
         mediaPlayer.prepareVideo(uri);
     }
 
     @Override
-    public void loadVideoWithTimeout(Uri uri, ContentType contentType, Timeout timeout, LoadTimeoutCallback loadTimeoutCallback) {
+    public void loadVideoWithTimeout(PlayerView playerView,
+                                     Uri uri,
+                                     ContentType contentType,
+                                     Timeout timeout,
+                                     LoadTimeoutCallback loadTimeoutCallback) {
         loadTimeout.start(timeout, loadTimeoutCallback);
-        loadVideo(uri, contentType);
+        loadVideo(playerView, uri, contentType);
     }
 
     @Override
@@ -239,18 +244,12 @@ public final class AndroidMediaPlayerImpl implements Player {
         return MEDIA_PLAYER_INFORMATION;
     }
 
-    @Override
-    public void attach(PlayerView playerView) {
+    private void attach(PlayerView playerView) {
+        // TODO
         mediaPlayer.setSurfaceHolderRequester(playerView.getSurfaceHolderRequester());
         BuggyVideoDriverPreventer.newInstance(playerView.getContainerView(), this).preventVideoDriverBug();
         listenersHolder.addVideoSizeChangedListener(playerView.getVideoSizeChangedListener());
         listenersHolder.getStateChangedListeners().add(playerView.getStateChangedListener());
-    }
-
-    @Override
-    public void detach(PlayerView playerView) {
-        listenersHolder.removeVideoSizeChangedListener(playerView.getVideoSizeChangedListener());
-        listenersHolder.removeStateChangedListener(playerView.getStateChangedListener());
     }
 
     @Override

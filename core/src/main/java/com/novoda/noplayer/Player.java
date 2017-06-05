@@ -23,15 +23,11 @@ public interface Player extends PlayerState {
 
     void release();
 
-    void loadVideo(Uri uri, ContentType contentType);
+    void loadVideo(PlayerView playerView, Uri uri, ContentType contentType);
 
-    void loadVideoWithTimeout(Uri uri, ContentType contentType, Timeout timeout, LoadTimeoutCallback loadTimeoutCallback);
+    void loadVideoWithTimeout(PlayerView playerView, Uri uri, ContentType contentType, Timeout timeout, LoadTimeoutCallback loadTimeoutCallback);
 
     PlayerInformation getPlayerInformation();
-
-    void attach(PlayerView playerView);
-
-    void detach(PlayerView playerView);
 
     void selectAudioTrack(PlayerAudioTrack audioTrack);
 
