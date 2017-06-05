@@ -433,7 +433,7 @@ public class ExoPlayerTwoImplTest {
     public void whenLoadingVideo_thenResetsPreparedListeners() {
         player.loadVideo(uri, ANY_CONTENT_TYPE);
 
-        verify(preparedListeners).reset();
+        verify(preparedListeners).resetPreparedState();
     }
 
     @Test
@@ -463,7 +463,7 @@ public class ExoPlayerTwoImplTest {
     public void whenLoadingVideoWithTimeout_thenResetsPreparedListeners() {
         player.loadVideoWithTimeout(uri, ANY_CONTENT_TYPE, ANY_TIMEOUT, ANY_LOAD_TIMEOUT_CALLBACK);
 
-        verify(preparedListeners).reset();
+        verify(preparedListeners).resetPreparedState();
     }
 
     @Test

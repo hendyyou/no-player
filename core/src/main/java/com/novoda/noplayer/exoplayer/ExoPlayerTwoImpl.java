@@ -206,7 +206,7 @@ public class ExoPlayerTwoImpl implements Player {
 
     @Override
     public void loadVideo(Uri uri, ContentType contentType) {
-        listenersHolder.getPreparedListeners().reset();
+        listenersHolder.getPreparedListeners().resetPreparedState();
         exoPlayer.addListener(forwarder.exoPlayerEventListener());
         exoPlayer.setVideoDebugListener(forwarder.videoRendererEventListener());
 
