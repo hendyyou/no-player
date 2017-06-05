@@ -43,10 +43,6 @@ public final class AndroidMediaPlayerImpl implements Player {
     private VideoPosition seekToPosition = NO_SEEK_TO_POSITION;
     private boolean seekingWithIntentToPlay;
 
-    private VideoSizeChangedListener videoSizeChangedListener;
-    private StateChangedListener stateChangedListener;
-    private CheckBufferHeartbeatCallback heartbeatCallback;
-
     public static AndroidMediaPlayerImpl newInstance(Context context) {
         AndroidMediaPlayerFacade androidMediaPlayer = AndroidMediaPlayerFacade.newInstance(context);
         LoadTimeout loadTimeout = new LoadTimeout(new SystemClock(), new Handler(Looper.getMainLooper()));
@@ -247,10 +243,14 @@ public final class AndroidMediaPlayerImpl implements Player {
     public void attach(PlayerView playerView) {
         mediaPlayer.setSurfaceHolderRequester(playerView.getSurfaceHolderRequester());
         BuggyVideoDriverPreventer.newInstance(playerView.getContainerView(), this).preventVideoDriverBug();
-        videoSizeChangedListener = playerView.getVideoSizeChangedListener();
-        listenersHolder.addVideoSizeChangedListener(videoSizeChangedListener);
-        stateChangedListener = playerView.getStateChangedListener();
-        listenersHolder.getStateChangedListeners().add(stateChangedListener);
+        listenersHolder.addVideoSizeChangedListener(playerView.getVideoSizeChangedListener());
+        listenersHolder.getStateChangedListeners().add(playerView.getStateChangedListener());
+    }
+
+    @Override
+    public void detach(PlayerView playerView) {
+        listenersHolder.removeVideoSizeChangedListener(playerView.getVideoSizeChangedListener());
+        listenersHolder.removeStateChangedListener(playerView.getStateChangedListener());
     }
 
     @Override
@@ -285,11 +285,5 @@ public final class AndroidMediaPlayerImpl implements Player {
         listenersHolder.getPlayerReleaseListener().onPlayerPreRelease(this);
         mediaPlayer.release();
         listenersHolder.getStateChangedListeners().onVideoReleased();
-        listenersHolder.removeVideoSizeChangedListener(videoSizeChangedListener);
-        listenersHolder.removeStateChangedListener(stateChangedListener);
-        listenersHolder.removeHeartbeatCallback(heartbeatCallback);
-        videoSizeChangedListener = null;
-        stateChangedListener = null;
-        heartbeatCallback = null;
     }
 }

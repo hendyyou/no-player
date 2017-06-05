@@ -191,17 +191,17 @@ public class ExoPlayerTwoImpl implements Player {
     }
 
     @Override
-    public void stop() {
-        exoPlayer.stop();
-    }
-
-    @Override
     public void release() {
         listenersHolder.getPlayerReleaseListener().onPlayerPreRelease(this);
         listenersHolder.getStateChangedListeners().onVideoReleased();
         loadTimeout.cancel();
         heart.stopBeatingHeart();
         exoPlayer.release();
+    }
+
+    @Override
+    public void stop() {
+        exoPlayer.stop();
     }
 
     @Override
@@ -235,6 +235,11 @@ public class ExoPlayerTwoImpl implements Player {
         surfaceHolderRequester = playerView.getSurfaceHolderRequester();
         listenersHolder.addStateChangedListener(playerView.getStateChangedListener());
         listenersHolder.addVideoSizeChangedListener(playerView.getVideoSizeChangedListener());
+    }
+
+    @Override
+    public void detach(PlayerView playerView) {
+
     }
 
     @Override
