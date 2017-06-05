@@ -181,11 +181,6 @@ public class ExoPlayerTwoImpl implements Player {
     }
 
     @Override
-    public void release() {
-        // TODO: remove
-    }
-
-    @Override
     public void stop() {
         assertVideoLoaded();
         exoPlayer.stop();

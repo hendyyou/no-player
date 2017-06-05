@@ -21,8 +21,6 @@ public interface Player extends PlayerState {
 
     void stop();
 
-    void release();
-
     void loadVideo(PlayerView playerView, Uri uri, ContentType contentType);
 
     void loadVideoWithTimeout(PlayerView playerView, Uri uri, ContentType contentType, Timeout timeout, LoadTimeoutCallback loadTimeoutCallback);

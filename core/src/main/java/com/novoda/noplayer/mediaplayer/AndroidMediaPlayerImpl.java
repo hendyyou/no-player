@@ -268,17 +268,12 @@ public final class AndroidMediaPlayerImpl implements Player {
     }
 
     @Override
-    public void reset() {
-        release();
-    }
-
-    @Override
     public void stop() {
         mediaPlayer.stop();
     }
 
     @Override
-    public void release() {
+    public void reset() {
         loadTimeout.cancel();
         stopBeatingHeart();
         listenersHolder.getPlayerReleaseListener().onPlayerPreRelease(this);
