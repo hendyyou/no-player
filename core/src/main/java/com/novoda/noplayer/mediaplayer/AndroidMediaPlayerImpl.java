@@ -184,13 +184,6 @@ public final class AndroidMediaPlayerImpl implements Player {
     }
 
     @Override
-    public void loadVideo(PlayerView playerView, Uri uri, ContentType contentType) {
-        attach(playerView);
-        listenersHolder.getBufferStateListeners().onBufferStarted();
-        mediaPlayer.prepareVideo(uri);
-    }
-
-    @Override
     public void loadVideoWithTimeout(PlayerView playerView,
                                      Uri uri,
                                      ContentType contentType,
@@ -198,6 +191,20 @@ public final class AndroidMediaPlayerImpl implements Player {
                                      LoadTimeoutCallback loadTimeoutCallback) {
         loadTimeout.start(timeout, loadTimeoutCallback);
         loadVideo(playerView, uri, contentType);
+    }
+
+    @Override
+    public void loadVideo(PlayerView playerView, Uri uri, ContentType contentType) {
+        attach(playerView);
+        listenersHolder.getBufferStateListeners().onBufferStarted();
+        mediaPlayer.prepareVideo(uri);
+    }
+
+    private void attach(PlayerView playerView) {
+        mediaPlayer.setSurfaceHolderRequester(playerView.getSurfaceHolderRequester());
+        BuggyVideoDriverPreventer.newInstance(playerView.getContainerView(), this).preventVideoDriverBug();
+        listenersHolder.addVideoSizeChangedListener(playerView.getVideoSizeChangedListener());
+        listenersHolder.getStateChangedListeners().add(playerView.getStateChangedListener());
     }
 
     @Override
@@ -242,14 +249,6 @@ public final class AndroidMediaPlayerImpl implements Player {
     @Override
     public PlayerInformation getPlayerInformation() {
         return MEDIA_PLAYER_INFORMATION;
-    }
-
-    private void attach(PlayerView playerView) {
-        // TODO
-        mediaPlayer.setSurfaceHolderRequester(playerView.getSurfaceHolderRequester());
-        BuggyVideoDriverPreventer.newInstance(playerView.getContainerView(), this).preventVideoDriverBug();
-        listenersHolder.addVideoSizeChangedListener(playerView.getVideoSizeChangedListener());
-        listenersHolder.getStateChangedListeners().add(playerView.getStateChangedListener());
     }
 
     @Override
