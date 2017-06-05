@@ -173,7 +173,6 @@ public class ExoPlayerTwoImpl implements Player {
 
     @Override
     public void loadVideo(PlayerView playerView, Uri uri, ContentType contentType) {
-        // TODO add reset()
         attach(listenersHolder, playerView);
         ExoPlayerForwarder forwarder = forwarderFactory.create(listenersHolder, this);
         exoPlayerFacade.loadVideo(uri, contentType, forwarder);
